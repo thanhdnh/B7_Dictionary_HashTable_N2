@@ -8,12 +8,29 @@ public class IPAddress : DictionaryBase
     }
     public string Item(string name)
     {
-        return
-base.InnerHashtable[name].ToString();
+        return base.InnerHashtable[name].ToString();
     }
     public void Remove(string name)
     {
         base.InnerHashtable.Remove(name);
+    }
+    public void Display(){
+        DictionaryEntry[] arr = new DictionaryEntry[base.InnerHashtable.Count];
+        base.InnerHashtable.CopyTo(arr, 0);
+        
+        for(int i=0; i<arr.Length-1; i++)
+            for(int j=i+1; j<arr.Length; j++){
+                //DictionaryEntry a = arr[i];
+                //DictionaryEntry b = arr[j];
+                if(arr[i].Value.ToString().CompareTo(arr[j].Value.ToString())>0){
+                    DictionaryEntry t = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = t;
+                }
+            }
+        
+        foreach(DictionaryEntry ele in arr)
+            Console.WriteLine($"Key={ele.Key}, Value={ele.Value}");
     }
 }
 public class BucketHash
@@ -59,15 +76,21 @@ public class Program
         myips.Add("Mike", "192.151.0.1");
         myips.Add("David", "192.151.0.2");
         myips.Add("Bernica", "192.151.0.3");
-        Console.WriteLine("IP cua Mike la: " + myips.Item("Mike"));
+        myips.Display();
+        /*Console.WriteLine("IP cua Mike la: " + myips.Item("Mike"));
         Console.WriteLine("\n key va value la:");
         IDictionaryEnumerator e = myips.GetEnumerator();
         while (e.MoveNext())
             Console.WriteLine("key={0},value={1}", e.Key, e.Value);
-        
+        */
+        /*
+            key=Bernica,value=192.151.0.3
+            key=David,value=192.151.0.2
+            key=Mike,value=192.151.0.1
+        */
         System.Console.WriteLine("\n======\n");
 
-        Hashtable infos = new Hashtable(5);
+        /*Hashtable infos = new Hashtable(5);
         infos.Add("salary", 100000);
         infos.Add("name", "David Job");
         infos.Add("age", 45);
@@ -79,6 +102,6 @@ public class Program
         Console.WriteLine("Value:");
         foreach (object value in infos.Values)
             Console.WriteLine(value);
-        Console.ReadLine();
+        Console.ReadLine();*/
     }
 }
