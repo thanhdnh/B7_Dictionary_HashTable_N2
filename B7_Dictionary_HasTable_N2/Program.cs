@@ -91,7 +91,7 @@ public class Program
         foreach(KeyValuePair<string, int> word in dict){
             int count = 0;
             foreach(string w in words)
-                if(word.Key.ToString().Equals(w))
+                if(word.Key.Equals(w))
                     count++;
             dict[word.Key] = count;
         }
@@ -99,7 +99,7 @@ public class Program
     }
     public static void Main(string[] args)
     {
-        string s = "toi di hoc dai hoc";
+        string s = "toi di hoc dai hoc va hoc xong thi toi di ve";
         Dictionary<string, int> dict = UpdateDict(s);
         foreach(KeyValuePair<string,int> item in dict)
             Console.WriteLine(item.Key + ", " + item.Value);    
