@@ -70,13 +70,45 @@ public class BucketHash
 }
 public class Program
 {
+    static List<string> NonOverlapWord(string line){
+        string[] words = line.Split(" ");
+        List<string> result = new List<string>(words);
+        List<string> final = new List<string>();
+        foreach(string word in result)
+            if(!final.Contains(word))
+                final.Add(word);
+        return final;
+    }
+    static Dictionary<string, int> CreateDict(string line){
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+        foreach(string key in NonOverlapWord(line))
+            dict.Add(key, 1);
+        return dict;
+    }
+    static Dictionary<string, int> UpdateDict(string line){
+        string[] words = line.Split(" ");
+        Dictionary<string, int> dict = CreateDict(line);
+        foreach(KeyValuePair<string, int> word in dict){
+            int count = 0;
+            foreach(string w in words)
+                if(word.Key.ToString().Equals(w))
+                    count++;
+            dict[word.Key] = count;
+        }
+        return dict;
+    }
     public static void Main(string[] args)
     {
-        IPAddress myips = new IPAddress();
+        string s = "toi di hoc dai hoc";
+        Dictionary<string, int> dict = UpdateDict(s);
+        foreach(KeyValuePair<string,int> item in dict)
+            Console.WriteLine(item.Key + ", " + item.Value);    
+        /*IPAddress myips = new IPAddress();
         myips.Add("Mike", "192.151.0.1");
         myips.Add("David", "192.151.0.2");
         myips.Add("Bernica", "192.151.0.3");
-        myips.Display();
+        myips.Display();*/
+
         /*Console.WriteLine("IP cua Mike la: " + myips.Item("Mike"));
         Console.WriteLine("\n key va value la:");
         IDictionaryEnumerator e = myips.GetEnumerator();
@@ -88,7 +120,7 @@ public class Program
             key=David,value=192.151.0.2
             key=Mike,value=192.151.0.1
         */
-        System.Console.WriteLine("\n======\n");
+        //System.Console.WriteLine("\n======\n");
 
         /*Hashtable infos = new Hashtable(5);
         infos.Add("salary", 100000);
